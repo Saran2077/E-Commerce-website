@@ -8,12 +8,9 @@ import WishLIstPage from "../components/wishlist/wishlistPage.js";
 const WishList = () => {
   const user = useRecoilValue(userAtom)
   return (
-    <>
-      <NavBar />
-      <Container maxWidth={"xl"} sx={{marginTop:4}}>
-        {user ? <WishLIstPage /> : <h1>Login to see Wishlist</h1>}
-      </Container>
-    </>
+    <Container maxWidth={"xl"} sx={{marginTop:4}}>
+      {user ? <WishLIstPage /> : <h1>Login to see Wishlist</h1>}
+    </Container>
   );
 };
 

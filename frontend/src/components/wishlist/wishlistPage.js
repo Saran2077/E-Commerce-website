@@ -38,7 +38,8 @@ const WishLIstPage = () => {
     getWishlist();
   }, []);
 
-  const handleWishList = async (productId) => {
+  const handleWishList = async (e, productId) => {
+    e.stopPropagation()
     try {
       const res = await fetch(`/api/wishlist`, {
         method: "POST",
@@ -178,7 +179,7 @@ const WishLIstPage = () => {
                                   padding: "5px",
                                   boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                                 }}
-                                onClick={() => handleWishList(item._id)}
+                                onClick={(e) => handleWishList(e, item._id)}
                               />
                             ) : (
                               <FavoriteBorderIcon

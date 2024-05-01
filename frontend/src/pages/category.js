@@ -36,12 +36,9 @@ const Category = () => {
   }
 
   return (
-    <>
-    <NavBar />
     <Container maxWidth={"xl"}>
         {category && <CardContainer cards={category} showAll={true} showViewAllButton={false} />}
     </Container>
-    </>
   )
 }
 

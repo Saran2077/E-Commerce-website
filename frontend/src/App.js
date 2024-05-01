@@ -18,11 +18,14 @@ import "./App.css"
 import PlaceOrderPage from "./pages/placeOrderPage.js";
 import TransactionSuccessPage from "./pages/success.js";
 import TransactionFailedPage from "./pages/cancel.js";
+import NavBar from "./components/home/navBar.js";
+import { Container } from "@mui/material";
 
 const App = () => {
   const [user, setUser] = useRecoilState(userAtom)
   return (
     <>
+    <NavBar />
     <Routes>
       <Route path="/" element={ <HomePage />} />
       <Route path="/login" element={ !user ? <SignIn /> : <Navigate to="/" />} />

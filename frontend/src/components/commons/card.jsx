@@ -39,7 +39,7 @@ export default function AmazonCard({ card }) {
         <CardMedia sx={mediaStyles} image={card.image} title={card.title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {card.title}
+            {card.title.slice(0, 30)}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="h3">
             Price: ₹{card.price}

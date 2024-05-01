@@ -117,7 +117,6 @@ const ProductDescriptionPage = () => {
 
   return (
     <>
-      <NavBar />
       {product && (
         <Container>
           <Grid
@@ -144,7 +143,7 @@ const ProductDescriptionPage = () => {
               </Typography>
 
               <Typography variant="h5" gutterBottom>
-                Product Category
+                Product Description
               </Typography>
               <Typography variant="body1" mb={2}>
                 {product.description}
