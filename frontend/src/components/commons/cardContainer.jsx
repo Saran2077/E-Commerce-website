@@ -8,16 +8,16 @@ export default function CardContainer({ cards, isShowTitle=true, showAll=false,s
   const navigate = useNavigate()
   const styles = {
     display: "flex",
-    overflowX: "auto", // Enable horizontal overflow
-    maxWidth: "100%", // Ensure the container doesn't exceed its parent
-    flexWrap: showAll ? "wrap" : "nowrap" // Adjust flexWrap dynamically
+    overflowX: "auto", 
+    maxWidth: "100%", 
+    flexWrap: showAll ? "wrap" : "nowrap"
   };
   return (
     <Stack>
       {isShowTitle && 
-        <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+        <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop:4,paddingBottom:4}}>
         <Typography variant="h3" ml={1} fontWeight={700}> { cards.title }</Typography>
-        { showViewAllButton && <Typography fontSize={16} onClick={() => navigate(`/category/${cards._id}`)} fontWeight={400} ml={1} sx={{cursor: "pointer"}}> View All</Typography>}
+        { showViewAllButton && <Typography fontSize={20} onClick={() => navigate(`/category/${cards._id}`)} fontWeight={700} ml={1} sx={{cursor: "pointer"}}> View All</Typography>}
         </Box>}
       <div 
         style={styles}
