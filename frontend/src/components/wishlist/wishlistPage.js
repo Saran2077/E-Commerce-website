@@ -22,25 +22,25 @@ const WishLIstPage = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [user, setUser] = useRecoilState(userAtom);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getWishlist = async () => {
       try {
         const res = await fetch("/api/wishlist");
-      const data = await res.json();
-      setWishlistItems(data);
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setIsLoading(false)
-    }
+        const data = await res.json();
+        setWishlistItems(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getWishlist();
   }, []);
 
   const handleWishList = async (e, productId) => {
-    e.stopPropagation()
+    e.stopPropagation();
     try {
       const res = await fetch(`/api/wishlist`, {
         method: "POST",
@@ -54,9 +54,11 @@ const WishLIstPage = () => {
       const data = await res.json();
       if (data.error) return toast.error(data.error);
       let newUser = { ...user, wishlist: data.wishlist };
-      toast.success(data.message)
-      setWishlistItems(wishlistItems.filter(wishlist => wishlist._id != productId))
-      
+      toast.success(data.message);
+      setWishlistItems(
+        wishlistItems.filter((wishlist) => wishlist._id != productId)
+      );
+
       setUser(newUser);
       localStorage.setItem("user", JSON.stringify(newUser));
     } catch (error) {
@@ -66,22 +68,23 @@ const WishLIstPage = () => {
 
   if (isLoading) {
     return (
-      <Box sx={{display: "grid", placeContent: "center", minHeight: "100%"}}>
+      <Box sx={{ display: "grid", placeContent: "center", minHeight: "100%" }}>
         <CircularProgress disableShrink />
       </Box>
-    )
+    );
   }
 
   return (
     <Container
+      maxWidth={"lg"}
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-        <Typography variant="h4">My Wishlist</Typography>
-        <Divider sx={{marginBottom: "1rem"}} />
+      <Typography variant="h4">My Wishlist</Typography>
+      <Divider sx={{ marginBottom: "1rem" }} />
       {wishlistItems?.length ? (
         <Grid container spacing={2}>
           <Grid
@@ -185,7 +188,6 @@ const WishLIstPage = () => {
                             ) : (
                               <FavoriteBorderIcon
                                 style={{
-
                                   backgroundColor: "white",
                                   borderRadius: "50%",
                                   padding: "5px",

@@ -18,7 +18,13 @@ import { toast } from "react-toastify";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Image } from "@mui/icons-material";
-import { IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import {
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { Cancel as CancelIcon } from "@mui/icons-material";
 
 const OrderPage = () => {
@@ -35,7 +41,7 @@ const OrderPage = () => {
   }, []);
 
   const getOrders = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const res = await fetch("/api/order");
       const data = await res.json();
@@ -57,7 +63,7 @@ const OrderPage = () => {
         body: JSON.stringify({
           orderId: orderIdToDelete,
           productId: productIdToDelete,
-        })
+        }),
       });
       const data = await res.json();
       if (data.error) return toast.error(data.error);
@@ -88,6 +94,7 @@ const OrderPage = () => {
 
   return (
     <Container
+      maxWidth={"lg"}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -97,8 +104,8 @@ const OrderPage = () => {
         padding: "20px",
       }}
     >
-        <Typography variant="h4">Order History</Typography>
-        <Divider sx={{marginBottom: "1rem"}} />
+      <Typography variant="h4">Order History</Typography>
+      <Divider sx={{ marginBottom: "1rem" }} />
       {orderItems.length ? (
         <Grid container spacing={2}>
           {orderItems.map((orderItem) =>
@@ -134,16 +141,18 @@ const OrderPage = () => {
                       </Typography>
                     </CardContent>
                   </Box>
-                  {orderItem.status === "pending" && <IconButton
-                    onClick={() => {
-                      setConfirmationDialogOpen(true);
-                      setOrderIdToDelete(orderItem._id);
-                      setProductIdToDelete(product.product._id);
-                    }}
-                    disabled={orderItem.status !== "pending"}
-                  >
-                    <CancelIcon />
-                  </IconButton>}
+                  {orderItem.status === "pending" && (
+                    <IconButton
+                      onClick={() => {
+                        setConfirmationDialogOpen(true);
+                        setOrderIdToDelete(orderItem._id);
+                        setProductIdToDelete(product.product._id);
+                      }}
+                      disabled={orderItem.status !== "pending"}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  )}
                 </Card>
               </Grid>
             ))

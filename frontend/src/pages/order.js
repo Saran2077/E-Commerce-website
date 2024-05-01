@@ -8,11 +8,17 @@ import OrderPage from "../components/order/orderPage.js";
 const Order = () => {
   const user = useRecoilValue(userAtom);
   return (
-    <Container maxWidth={"xl"} sx={{ marginTop: 4 }}>
+    <>
       {user ? (
         <OrderPage />
       ) : (
-        <div style={{ height: "80vh" ,textAlign: "center", placeContent: "center"  }}>
+        <div
+          style={{
+            height: "80vh",
+            textAlign: "center",
+            placeContent: "center",
+          }}
+        >
           <Typography variant="h4" color="textPrimary" gutterBottom>
             Login to see your Orders
           </Typography>
@@ -26,7 +32,7 @@ const Order = () => {
           </Button>
         </div>
       )}
-    </Container>
+    </>
   );
 };
 

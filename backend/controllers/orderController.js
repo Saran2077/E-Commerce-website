@@ -35,4 +35,17 @@ const cancelOrder = async (req, res) => {
     }
 }
 
-export { getOrders, cancelOrder } 
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}).populate("products.product").sort({ createdAt: -1 })
+        if (orders.length <= 0) {
+            return res.status(404).json({ error: "Order not found" })
+        }
+        res.status(200).json(orders)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log(`Error in get all orders: ${error.message}`)
+    }
+}
+
+export { getOrders, cancelOrder, getAllOrders } 

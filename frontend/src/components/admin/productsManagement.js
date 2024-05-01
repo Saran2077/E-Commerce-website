@@ -22,7 +22,7 @@ import {
   Select,
 } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon, Edit, Image } from "@mui/icons-material";
-import usePreviewImg from "../hooks/usePreviewImg.js";
+import usePreviewImg from "../../hooks/usePreviewImg.js";
 import { toast } from "react-toastify";
 
 const ProductsManagement = () => {

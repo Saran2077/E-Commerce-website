@@ -9,7 +9,7 @@ import WishListPage from "../components/wishlist/wishlistPage.js";
 const WishList = () => {
   const user = useRecoilValue(userAtom);
   return (
-    <Container maxWidth={"xl"} sx={{ marginTop: 4 }}>
+    <>
       {user ? (
         <WishListPage />
       ) : (
@@ -27,7 +27,7 @@ const WishList = () => {
           </Button>
         </div>
       )}
-    </Container>
+    </>
   );
 };
 
