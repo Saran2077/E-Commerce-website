@@ -1,0 +1,26 @@
+.why_section .box {
+  text-align: center;
+  margin-top: 25px;
+  background-color: #002c3e;
+  padding: 45px 50px;
+  border-radius: 5px;
+  color: #ffffff;
+  min-height: "350px" !important;
+}
+.why_section .box .svg {
+  width: 55px;
+  height: auto;
+  fill: #ffffff;
+  color: "white";
+}
+.explore_by_category {
+  display: "flex";
+  flex-direction: "row";
+  justify-content: "space-between";
+}
+.explore_by_category .rounded_box{
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 25px 50px;
+    color: #ffffff;
+}
