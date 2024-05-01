@@ -3,7 +3,6 @@ import { Container, Typography, Button, Grid, Dialog, DialogTitle, DialogContent
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import ProductsManagement from './productsManagement';
-// import axios from 'axios';
 
 const AdminDashboard = () => {
     const [categories, setCategories] = useState([]);

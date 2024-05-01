@@ -103,9 +103,23 @@ const ProductsManagement = () => {
     setProductFormData({...data})
   }
 
+  const handleEdit = async () => {
+    try {
+      const res = await fetch("/api/product", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productFormData),
+      })
+    } catch (error) {
+      toast.error(error)
+    }
+  }
+
   const handleDeleteProduct = async (productId) => {
     try {
-      await fetch(`/api/products/${productId}`, {
+      await fetch(`/api/product/${productId}`, {
         method: "DELETE",
       });
       fetchProducts();
@@ -159,7 +173,7 @@ const ProductsManagement = () => {
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.category.title}</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => handleDeleteProduct(product._id)}>
+                  <IconButton disabled={true} onClick={() => handleDeleteProduct(product._id)}>
                     <DeleteIcon />
                   </IconButton>
                   <IconButton onClick={() => handleEditProduct(product)}>
@@ -235,8 +249,8 @@ const ProductsManagement = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenProductDialog(false)}>Cancel</Button>
-          <Button onClick={handleAddProduct} color="primary">
-            Add
+          <Button onClick={openProductDialog ? handleEdit: handleAddProduct} color="primary">
+            {openProductDialog ? "Update" : "Add"}
           </Button>
         </DialogActions>
       </Dialog>

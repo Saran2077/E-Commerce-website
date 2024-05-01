@@ -20,6 +20,7 @@ import TransactionSuccessPage from "./pages/success.js";
 import TransactionFailedPage from "./pages/cancel.js";
 import NavBar from "./components/home/navBar.js";
 import { Container } from "@mui/material";
+import Order from "./pages/order.js";
 
 const App = () => {
   const [user, setUser] = useRecoilState(userAtom)
@@ -35,6 +36,7 @@ const App = () => {
       <Route path="/placeOrder" element={ <PlaceOrderPage />} />
       <Route path="/success" element={ <TransactionSuccessPage />} />
       <Route path="/cancel" element={ <TransactionFailedPage />} />
+      <Route path="/order" element={ <Order />} />
       <Route path="/wishlist" element={ <WishList />} />
       <Route path="/category/:cid" element={ <Category />} />
       <Route path="/product/:pid" element={ <ProductDescriptionPage />} />

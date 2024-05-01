@@ -9,6 +9,7 @@ import {
   Grid,
   Box,
   CircularProgress,
+  Divider,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -77,10 +78,10 @@ const WishLIstPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
       }}
     >
+        <Typography variant="h4">My Wishlist</Typography>
+        <Divider sx={{marginBottom: "1rem"}} />
       {wishlistItems?.length ? (
         <Grid container spacing={2}>
           <Grid

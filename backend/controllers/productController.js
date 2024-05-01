@@ -65,4 +65,25 @@ const getProducts = async (req, res) => {
   }
 }
 
-export { createProduct, getProduct, getProducts };
+const deleteProduct = async (req, res) => {
+  try {
+    console.log("Inside delete")
+    const { id } = req.params 
+    const product = await Product.findByIdAndDelete(id)
+    res.status(200).json({ message: "Product deleted successfully" })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+    console.log(`Error in delete Product: ${error.message}`)
+  }
+}
+
+const updateProduct = async (req, res) => {
+  try {
+    const { newProduct } = req.body;
+    await Product.findByIdAndUpdate(newProduct._id)
+  } catch (error) {
+    console.log(`Error in update product: ${error.message}`)
+  }
+}
+
+export { createProduct, getProduct, getProducts, deleteProduct, updateProduct };

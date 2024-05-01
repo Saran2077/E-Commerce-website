@@ -18,17 +18,17 @@ import {
   AddCircleOutline as AddIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { loadStripe } from '@stripe/stripe-js'
+import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import userAtom from "../../atom/userAtom.js";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [isDisabled, setIsDisabled] = useState(false)
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(true)
-  const user = useRecoilValue(userAtom)
+  const [isDisabled, setIsDisabled] = useState(false);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
     const getCart = async () => {
@@ -36,10 +36,10 @@ const CartPage = () => {
         const res = await fetch("/api/cart");
         const data = await res.json();
         setCartItems(data);
-      } catch (error) { 
+      } catch (error) {
         console.log(error);
-      } finally { 
-        setIsLoading(false)
+      } finally {
+        setIsLoading(false);
       }
     };
     getCart();
@@ -54,18 +54,18 @@ const CartPage = () => {
             return { ...item, quantity: newQuantity };
           }
           return item;
-        }))
-        const res = await fetch("/api/cart", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productId: itemId,
-            quantity: newQuantity,
-          }),
-        }
+        })
       );
+      const res = await fetch("/api/cart", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: itemId,
+          quantity: newQuantity,
+        }),
+      });
     } catch (error) {
       toast.error(error.message);
       console.log(error.message);
@@ -82,13 +82,15 @@ const CartPage = () => {
         newPrice += item.product.price * item.quantity;
       });
       setPrice(newPrice);
-    }
-    handlePrice()
-  }, [cartItems])
+    };
+    handlePrice();
+  }, [cartItems]);
 
   const handlePlaceOrder = async () => {
     try {
-      const stripe = await loadStripe('pk_test_51PBLuuSDQSV2IrRuw6YFhpuSgpxKEr0kpFbhgPbTjXybx27aYJ7EZ4crwEw6xY8dJI28Uz85kQwXFYmiNgGIpr7U00SgMEe0y1')
+      const stripe = await loadStripe(
+        "pk_test_51PBLuuSDQSV2IrRuw6YFhpuSgpxKEr0kpFbhgPbTjXybx27aYJ7EZ4crwEw6xY8dJI28Uz85kQwXFYmiNgGIpr7U00SgMEe0y1"
+      );
       const res = await fetch("/api/cart/create-checkout-session", {
         method: "POST",
         headers: {
@@ -97,9 +99,9 @@ const CartPage = () => {
         body: JSON.stringify({
           user: user._id,
           products: cartItems,
-          totalAmount: price
+          totalAmount: price,
         }),
-      })
+      });
       const data = await res.json();
       if (data.error) return toast.error(data.error);
       const result = await stripe.redirectToCheckout({
@@ -111,7 +113,6 @@ const CartPage = () => {
     }
   };
 
-
   const removeItemFromCart = async (id) => {
     try {
       const res = await fetch("/api/cart", {
@@ -120,20 +121,20 @@ const CartPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productId: id }),
-      })
+      });
       const data = await res.json();
       if (data.error) return toast.error(data.error);
-      setCartItems(cartItems.filter(item => item.product._id != id))
+      setCartItems(cartItems.filter((item) => item.product._id != id));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   if (isLoading) {
     return (
-      <Box sx={{display: "grid", placeContent: "center", minHeight: "100%"}}>
+      <Box sx={{ display: "grid", placeContent: "center", minHeight: "100%" }}>
         <CircularProgress disableShrink />
       </Box>
-    )
+    );
   }
 
   return (
@@ -158,13 +159,15 @@ const CartPage = () => {
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
+            <Typography variant="h4" sx={{textAlign: "center"}}>My Cart</Typography>
+            <Divider sx={{ marginBottom: "1rem" }} />
             <div style={{ position: "relative", width: "100%" }}>
               {cartItems.map((item) => (
+                item.product &&
                 <Card key={item.id} variant="outlined" sx={{ marginBottom: 2 }}>
                   <CardContent>
                     <Stack
                       direction="row"
-                      spacing={2}
                       sx={{ justifyContent: "space-between" }}
                     >
                       <Typography
@@ -175,13 +178,13 @@ const CartPage = () => {
                           component={"div"}
                           sx={{ display: "flex", flexDirection: "column" }}
                         >
-                          <Typography sx={{ width: 112, height: 112 }}>
+                          <Typography sx={{ width: "112px", height: "112px" }}>
                             <img
                               src={item.product.image}
                               alt={item.product.title}
                               style={{
-                                maxWidth: "100%",
-                                height: "100%",
+                                maxWidth: "112px",
+                                height: "112px",
                                 objectFit: "cover",
                               }}
                             />
@@ -190,6 +193,7 @@ const CartPage = () => {
                             direction="row"
                             spacing={1}
                             alignItems="center"
+                            justifyContent={"center"}
                             paddingTop={1.5}
                           >
                             <IconButton
@@ -214,7 +218,7 @@ const CartPage = () => {
                                   item.quantity + 1
                                 )
                               }
-                              disabled={isDisabled }
+                              disabled={isDisabled}
                               size="small"
                             >
                               <AddIcon />
@@ -222,7 +226,11 @@ const CartPage = () => {
                           </Stack>
                         </Typography>
                         <div
-                          style={{ flexDirection: "column", display: "flex", marginLeft: "10px" }}
+                          style={{
+                            flexDirection: "column",
+                            display: "flex",
+                            marginLeft: "10px",
+                          }}
                         >
                           <Typography variant="subtitle1" sx={{ fontSize: 16 }}>
                             {item.product.title}
@@ -238,7 +246,7 @@ const CartPage = () => {
                             <Typography variant="body2">
                               Price:{" "}
                               <span style={{ fontSize: 20, fontWeight: 700 }}>
-                              ₹{item.product.price}
+                                ₹{item.product.price}
                               </span>
                             </Typography>
                           </div>
@@ -251,7 +259,11 @@ const CartPage = () => {
                       >
                         <Typography
                           component="p"
-                          sx={{ color: "red", fontSize: "16px", cursor: "pointer" }}
+                          sx={{
+                            color: "red",
+                            fontSize: "16px",
+                            cursor: "pointer",
+                          }}
                           onClick={() => removeItemFromCart(item.product._id)}
                         >
                           Remove
@@ -333,7 +345,7 @@ const CartPage = () => {
                   Price ({cartItems?.length ?? 0})
                 </Typography>
                 <Typography variant="subtitle1" sx={{ fontSize: 16 }}>
-                  Price (₹{ price })
+                  Price (₹{price})
                 </Typography>
               </Typography>
               <Typography
@@ -376,7 +388,7 @@ const CartPage = () => {
                   Total amount
                 </Typography>
                 <Typography variant="subtitle1" sx={{ fontSize: 16 }}>
-                ₹{price < 500 ? price + 100 : price}
+                  ₹{price < 500 ? price + 100 : price}
                 </Typography>
               </Typography>
               <Divider
@@ -409,7 +421,9 @@ const CartPage = () => {
             Your cart is empty!
             <br /> Add something to make me happy.
             <Button
-              onClick={() => {navigate("/")}}
+              onClick={() => {
+                navigate("/");
+              }}
               variant="contained"
               color="success"
               sx={{
@@ -427,7 +441,6 @@ const CartPage = () => {
           </div>
         </Typography>
       )}
-      {/* Position the button within the container */}
     </Container>
   );
 };

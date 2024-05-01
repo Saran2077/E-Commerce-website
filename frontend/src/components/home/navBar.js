@@ -95,11 +95,12 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="sticky" style={{ padding: 0 }}>
+    // <AppBar position="sticky" style={{ padding: 0 }}>
+    <AppBar position="sticky" style={{ padding: "10px", height: "80px",background:'#F6D94F',boxShadow:'none' ,color:'black'}}>
       <Toolbar
         style={{ justifyContent: "space-between", alignItems: "center" }}
       >
-        <Typography variant="h6">My Store</Typography>
+        <Typography fontWeight={700} fontSize={30} variant="h6">My Store</Typography>
         <div>
           <Typography
             component={Link}
@@ -132,7 +133,7 @@ const NavBar = () => {
               aria-label="account of current user"
               aria-controls="primary-search-account-menu"
             >
-              <FavoriteBorder sx={{ color: "white" }} />
+              <FavoriteBorder sx={{ color: "black" }} />
             </IconButton>
           </Typography>
           <Typography
@@ -148,7 +149,7 @@ const NavBar = () => {
               aria-label="account of current user"
               aria-controls="primary-search-account-menu"
             >
-              <ShoppingCartCheckoutIcon sx={{ color: "white" }} />
+              <ShoppingCartCheckoutIcon sx={{ color: "black" }} />
             </IconButton>
           </Typography>
           {userLoggedIn ? (
@@ -216,6 +217,11 @@ const NavBar = () => {
               <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
                 Logout
                 <LogoutRoundedIcon />
+              </Box>
+            </MenuItem>
+            <MenuItem component={Link} to={"/order"}>
+              <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                My orders 
               </Box>
             </MenuItem>
           </Menu>
