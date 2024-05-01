@@ -13,9 +13,8 @@ import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import userAtom from '../../atom/userAtom.js';
-import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -43,7 +42,7 @@ function SignIn() {
 
   return (
     <Container maxWidth="xs">
-      <ToastContainer /> {/* Add ToastContainer */}
+      <ToastContainer /> 
       <Box
         sx={{
           marginTop: 8,
@@ -81,10 +80,6 @@ function SignIn() {
             error={!!errors.password}
             helperText={errors.password ? "Password is required" : ""}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -95,9 +90,6 @@ function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
             </Grid>
             <Grid item>
               <Link href="/signup" variant="body2">
