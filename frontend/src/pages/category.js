@@ -36,7 +36,7 @@ const Category = () => {
   }
 
   return (
-    <Container sx={{alignContent: "center"}} maxWidth={"xl"}>
+    <Container maxWidth={"xl"}>
         {category && <CardContainer cards={category} showAll={true} showViewAllButton={false} />}
     </Container>
   )

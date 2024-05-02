@@ -1,0 +1,25 @@
+/* curosel.module.css */
+.carouselContainer {
+    height: 400px;
+  }
+  
+  .carouselItem {
+    height: 400px;
+  }
+  
+  .carouselPaper {
+    height: 100%;
+  }
+  
+  .content {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; /* Ensure content fills the entire height */
+  }
+  .carouselImg{
+    height: 350px;
+    width: 300px !important;
+  }
+  

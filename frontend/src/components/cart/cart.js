@@ -3,7 +3,6 @@ import {
   Container,
   Typography,
   Button,
-  TextField,
   Card,
   CardContent,
   IconButton,
@@ -56,7 +55,7 @@ const CartPage = () => {
           return item;
         })
       );
-      const res = await fetch("/api/cart", {
+      await fetch("/api/cart", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -144,8 +143,7 @@ const CartPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
+        minHeight: "100%",
       }}
     >
       {cartItems?.length ? (

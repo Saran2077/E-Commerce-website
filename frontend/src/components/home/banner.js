@@ -51,7 +51,6 @@
 // export default Banner;
 
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Typography, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +60,7 @@ const Banner = () => {
   return (
     <div
       style={{
-        height: "90vh",
+        height: "100%",
         overflow: "hidden",
         background: "linear-gradient(to,right, rgb(246,217,79), rgb(246,217,77), rgb(246,218,76),rgb(247,219,75), rgb(253,224,64), rgb(253,227,74),rgb(227,197,13),rgb(188,159,5))",
       }}

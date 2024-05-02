@@ -5,19 +5,13 @@ import {
   Button,
   Card,
   CardContent,
-  Stack,
   Grid,
   Box,
   CircularProgress,
   Divider,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import userAtom from "../../atom/userAtom.js";
 import { toast } from "react-toastify";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Image } from "@mui/icons-material";
 import {
   IconButton,
   Dialog,
@@ -29,7 +23,6 @@ import { Cancel as CancelIcon } from "@mui/icons-material";
 
 const OrderPage = () => {
   const [orderItems, setOrderItems] = useState([]);
-  const [user, setUser] = useRecoilState(userAtom);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
@@ -99,14 +92,13 @@ const OrderPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
+        minHeight: "100%",
         padding: "20px",
       }}
     >
       <Typography variant="h4">Order History</Typography>
       <Divider sx={{ marginBottom: "1rem" }} />
-      {orderItems.length ? (
+      {orderItems.length > 0 ? (
         <Grid container spacing={2}>
           {orderItems.map((orderItem) =>
             orderItem.products.map((product) => (
@@ -168,7 +160,7 @@ const OrderPage = () => {
         >
           <img
             src="https://assets.materialup.com/uploads/66fb8bdf-29db-40a2-996b-60f3192ea7f0/preview.png"
-            alt="Empty Wishlist"
+            alt="Empty Orders"
           />
           <Typography variant="body1" sx={{ mt: "20px" }}>
             Your Order is empty! Add something to make me happy.

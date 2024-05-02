@@ -8,22 +8,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 const cardStyles = {
   height: 350,
-  width: 300, // Set fixed width for the card
+  width: 300, 
   margin: "1rem",
   borderRadius: "10px",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  transition: "transform 0.3s ease, background-color 0.3s ease", // Include background-color transition
-  position: "relative", // Set position relative to handle z-index
+  transition: "transform 0.3s ease, background-color 0.3s ease", 
+  position: "relative", 
   "&:hover": {
     transform: "scale(1.05)",
-    backgroundColor: "rgba(0, 0, 0, 0.05)", // Change background color on hover
+    backgroundColor: "rgba(0, 0, 0, 0.05)", 
   },
 };
 
 const mediaStyles = {
-  height: 200, // Set fixed height for the media
-  position: "relative", // Set position relative
-  zIndex: 1, // Ensure image stays above the card background
+  height: 200, 
+  position: "relative", 
+  zIndex: 1, 
 };
 
 export default function AmazonCard({ card }) {

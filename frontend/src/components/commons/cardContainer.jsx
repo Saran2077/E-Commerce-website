@@ -8,7 +8,8 @@ export default function CardContainer({ cards, isShowTitle=true, showAll=false,s
   const navigate = useNavigate()
   const styles = {
     display: "flex",
-    overflowX: "auto", 
+    justifyContent: "space-around",
+    overflowX: "hidden", 
     maxWidth: "100%", 
     flexWrap: showAll ? "wrap" : "nowrap"
   };

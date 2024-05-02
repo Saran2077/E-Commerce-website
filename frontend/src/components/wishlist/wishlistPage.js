@@ -11,7 +11,7 @@ import {
   CircularProgress,
   Divider,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import userAtom from "../../atom/userAtom.js";
 import { toast } from "react-toastify";
@@ -81,10 +81,9 @@ const WishLIstPage = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        mt: "1rem"
       }}
     >
-      <Typography variant="h4">My Wishlist</Typography>
-      <Divider sx={{ marginBottom: "1rem" }} />
       {wishlistItems?.length ? (
         <Grid container spacing={2}>
           <Grid
@@ -96,6 +95,8 @@ const WishLIstPage = () => {
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
+            <Typography variant="h4">My Wishlist</Typography>
+            <Divider sx={{ marginBottom: "1rem" }} />
             <div style={{ position: "relative", width: "100%" }}>
               {wishlistItems.length &&
                 wishlistItems.map((item) => (
