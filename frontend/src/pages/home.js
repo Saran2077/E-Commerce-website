@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <>
       <Banner />
-      <Container maxWidth="lg" className={styles.why_section}>
+      <Container className={styles.why_section}>
         <h2 style={{ textAlign: "center", fontSize: "60px", lineHeight: 0.5 }}>
           Why shop with us ?
         </h2>

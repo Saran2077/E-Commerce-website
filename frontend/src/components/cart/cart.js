@@ -138,7 +138,6 @@ const CartPage = () => {
 
   return (
     <Container
-      maxWidth="xl"
       sx={{
         display: "flex",
         flexDirection: "column",

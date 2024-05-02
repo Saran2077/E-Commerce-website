@@ -87,7 +87,6 @@ const OrderPage = () => {
 
   return (
     <Container
-      maxWidth={"lg"}
       sx={{
         display: "flex",
         flexDirection: "column",

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const CartHome = () => {
   const user = useRecoilValue(userAtom);
   return (
-    <Container maxWidth={"xl"} sx={{ marginTop: 4 }}>
+    <Container sx={{ marginTop: 4 }}>
       {user ? (
         <CartPage />
       ) : (
