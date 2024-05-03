@@ -80,6 +80,7 @@ const OrdersManagement = () => {
     });
     const data = await res.json();
     if (data.error) return toast.error(data.error);
+    setOpenOrderDialog(false)
     fetchOrders();
   };
 
@@ -163,7 +164,7 @@ const OrdersManagement = () => {
               </Box>
             ))}
           <Typography>
-            Address: {selectedOrder.address.address?.line1 + ' ' + selectedOrder.address.address.city + ' ' + selectedOrder.address.address.country + '\n' + selectedOrder.address.address.postal_code}
+            Address: {selectedOrder?.address?.address?.line1 + ' ' + selectedOrder?.address?.address?.city + ' ' + selectedOrder?.address?.address?.country + '\n' + selectedOrder?.address.address?.postal_code}
           </Typography>
           <Select
             value={orderStatus}
