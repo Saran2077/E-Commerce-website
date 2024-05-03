@@ -15,7 +15,6 @@ const createProduct = async (req, res) => {
       return res.status(404).json({ error: "Category does not exist" });
     }
 
-    // Create a new Product object with the uploaded image URL
     const product = new Product({
       title,
       description,
@@ -45,6 +44,7 @@ const getProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const product = await Product.findById(id);
+      
         if (!product) {
             return res.status(404).json({ error: "Product not found" })
         }
@@ -79,8 +79,27 @@ const deleteProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { newProduct } = req.body;
-    await Product.findByIdAndUpdate(newProduct._id)
+    const { newProduct } = req.body
+    const { id } = req.params;
+    const product = await Product.findById(id);
+
+    
+
+    if(!product) {
+      return res.status(404).json({ error: "Product does not exist" })
+    }
+
+    if (newProduct.image) {
+      await cloudinary.uploader.destroy(product.image.split("/").pop().split(".")[0])
+      
+      const uploaderImage = await cloudinary.uploader.upload(newProduct.image);
+      newProduct.image = uploaderImage.secure_url
+    }
+    else {
+      newProduct.image = product.image
+    }
+    const updatedProduct = await Product.findByIdAndUpdate(id, newProduct)
+    res.status(200).json({ message: "Product updated successfully", newProduct })
   } catch (error) {
     console.log(`Error in update product: ${error.message}`)
   }

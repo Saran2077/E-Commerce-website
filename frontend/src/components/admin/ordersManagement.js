@@ -7,7 +7,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
   TableContainer,
   Table,
   TableHead,
@@ -21,12 +20,16 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import { useRecoilValue } from 'recoil';
+import userAtom from "../../atom/userAtom.js"
+import NotAuthorized from "./notAuthorized.js";
 
 const OrdersManagement = () => {
   const [orders, setOrders] = useState([]);
   const [openOrderDialog, setOpenOrderDialog] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderStatus, setOrderStatus] = useState("");
+  const user = useRecoilValue(userAtom);
   const [orderFormData, setOrderFormData] = useState({
     customerName: "",
     productName: "",
@@ -41,6 +44,7 @@ const OrdersManagement = () => {
     try {
       const response = await fetch("/api/order/all");
       const data = await response.json();
+      console.log(data);
       if (data) {
         setOrders(data);
       }
@@ -49,7 +53,11 @@ const OrdersManagement = () => {
     }
   };
 
-  const handleMoreOptionsClick = (order) => {
+  const handleMoreOptionsClick = async (order) => {
+    const res = await fetch(`/api/order/address/${order.stripeId}`)
+    const data = await res.json();
+    if(data.error) return toast.error(data.error)
+    order.address = data 
     setSelectedOrder(order);
     console.log(order);
     setOpenOrderDialog(true);
@@ -78,6 +86,10 @@ const OrdersManagement = () => {
   const handleOrderFormChange = (e) => {
     setOrderFormData({ ...orderFormData, [e.target.name]: e.target.value });
   };
+
+  if (!user || user.role !== 1) {
+      return <NotAuthorized />;
+  }
 
   return (
     <Container>
@@ -151,7 +163,7 @@ const OrdersManagement = () => {
               </Box>
             ))}
           <Typography>
-            Total Amount: ₹{selectedOrder ? selectedOrder.totalAmount : ""}
+            Address: {selectedOrder.address.address?.line1 + ' ' + selectedOrder.address.address.city + ' ' + selectedOrder.address.address.country + '\n' + selectedOrder.address.address.postal_code}
           </Typography>
           <Select
             value={orderStatus}

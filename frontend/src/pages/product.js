@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { Container, Typography, Button, Grid, Box, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import NavBar from "../components/home/navBar";
 import Divider from "@mui/material/Divider";
 import CardContainer from "../components/commons/cardContainer";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { loadStripe } from "@stripe/stripe-js";
 import userAtom from "../atom/userAtom.js";
-import { useRecoilState } from "recoil";
+import orderAtom from "../atom/orderAtom.js";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const ProductDescriptionPage = () => {
   const [product, setProduct] = useState(null);
@@ -17,6 +17,7 @@ const ProductDescriptionPage = () => {
   const { pid } = useParams();
   const [user, setUser] = useRecoilState(userAtom)
   const [isLoading, setIsLoading] = useState(true)
+  const setOrder = useSetRecoilState(orderAtom)
 
   useEffect(() => {
     const getProduct = async () => {
@@ -98,6 +99,12 @@ const ProductDescriptionPage = () => {
       })
       const data = await res.json();
       if (data.error) return toast.error(data.error);
+      localStorage.setItem("order", JSON.stringify({
+        user: user._id,
+        products: [{product, quantity: 1}],
+        totalAmount: product.price || 0,
+        stripeId: data.id
+      }))
       const result = await stripe.redirectToCheckout({
         sessionId: data.id,
       });

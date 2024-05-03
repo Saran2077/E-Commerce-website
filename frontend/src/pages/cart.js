@@ -1,6 +1,5 @@
 import { Button, Container, Typography } from "@mui/material";
 import React from "react";
-import NavBar from "../components/home/navBar";
 import CartPage from "../components/cart/cart";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atom/userAtom.js";

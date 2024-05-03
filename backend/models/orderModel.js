@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
         type: Number, 
         required: true 
     },
+    stripeId: {
+        type: String,
+        required: true
+    },
     status: { 
         type: String, 
         enum: ['pending', 'shipped', 'delivered'], 

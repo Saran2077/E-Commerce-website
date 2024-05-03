@@ -110,10 +110,8 @@ const createCheckoutSession = async (req, res, next) => {
         allowed_countries: ["IN"],
       },
     });
-    req.sessionId = session.id;
-    console.log(session)
+
     res.status(200).json({ id: session.id });
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.log(`Error in createCheckoutSession: ${error.message}`);

@@ -11,7 +11,7 @@ router.post("/create", protectRoute, isAdmin, createProduct)
 
 router.get("/:id", getProduct)
 
-router.put("/", protectRoute, isAdmin, updateProduct)
+router.put("/:id", protectRoute, isAdmin, updateProduct)
 
 router.delete("/:id", deleteProduct)
 

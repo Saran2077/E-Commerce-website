@@ -11,12 +11,11 @@ import {
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../../atom/userAtom.js";
 import { toast } from "react-toastify";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder.js";
 
 const navLinkStyle = {
@@ -45,6 +44,7 @@ const NavBar = () => {
   const [avatarAnchorEl, setAvatarAnchorEl] = useState(null);
   const [categories, setCategories] = useState([]);
   const [userLoggedIn, setUserLoggedIn] = useRecoilState(userAtom);
+  const user = useRecoilValue(userAtom)
 
   const isCategoryMenuOpen = Boolean(categoryAnchorEl);
   const isAvatarMenuOpen = Boolean(avatarAnchorEl);
@@ -61,13 +61,6 @@ const NavBar = () => {
     };
     getCategory();
   }, []);
-
-  const handleWishList = async () => {
-    try {
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleCategoryMenuOpen = (event) => {
     setCategoryAnchorEl(event.currentTarget);
@@ -95,7 +88,6 @@ const NavBar = () => {
   };
 
   return (
-    // <AppBar position="sticky" style={{ padding: 0 }}>
     <AppBar position="sticky" style={{ padding: "10px", height: "80px",background:'#F6D94F',boxShadow:'none' ,color:'black'}}>
       <Toolbar
         style={{ justifyContent: "space-between", alignItems: "center" }}
@@ -224,6 +216,11 @@ const NavBar = () => {
                 My orders 
               </Box>
             </MenuItem>
+            {user && user.role === 1 && <MenuItem component={Link} to={"/dashboard"}>
+              <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                DashBoard 
+              </Box>
+            </MenuItem>}
           </Menu>
         </div>
       </Toolbar>

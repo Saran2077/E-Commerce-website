@@ -21,6 +21,9 @@ import TransactionFailedPage from "./pages/cancel.js";
 import NavBar from "./components/home/navBar.js";
 import { Container } from "@mui/material";
 import Order from "./pages/order.js";
+import OrdersManagement from "./components/admin/ordersManagement.js";
+import CategoryManagement from "./components/admin/categoryManagement.js";
+import ProductsManagement from "./components/admin/productsManagement.js";
 
 const App = () => {
   const [user, setUser] = useRecoilState(userAtom)
@@ -40,6 +43,9 @@ const App = () => {
       <Route path="/wishlist" element={ <WishList />} />
       <Route path="/category/:cid" element={ <Category />} />
       <Route path="/product/:pid" element={ <ProductDescriptionPage />} />
+        <Route path="/dashboard/products" element={<ProductsManagement />} />
+        <Route path="/dashboard/categories" element={<CategoryManagement />} />
+        <Route path="/dashboard/orders" element={<OrdersManagement />} />
     </Routes>
     </>
   );

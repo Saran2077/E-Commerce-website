@@ -15,15 +15,14 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  Input,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+  Input
 } from "@mui/material";
-import { Add as AddIcon, Delete as DeleteIcon, Edit, Image } from "@mui/icons-material";
+import { Add as AddIcon, Edit, Image } from "@mui/icons-material";
 import usePreviewImg from "../../hooks/usePreviewImg.js";
 import { toast } from "react-toastify";
+import { useRecoilValue } from 'recoil';
+import userAtom from "../../atom/userAtom.js"
+import NotAuthorized from "./notAuthorized.js";
 
 const ProductsManagement = () => {
   const [products, setProducts] = useState([]);
@@ -39,6 +38,7 @@ const ProductsManagement = () => {
   const fileRef = useRef(null);
   const [categories, setCategories] = useState([]);
   const { imgUrl, handleImageChange, setImgUrl } = usePreviewImg();
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
     fetchProducts();
@@ -105,28 +105,29 @@ const ProductsManagement = () => {
 
   const handleEdit = async () => {
     try {
-      const res = await fetch("/api/product", {
+      productFormData.image = imgUrl
+      const res = await fetch(`/api/product/${productFormData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(productFormData),
+        body: JSON.stringify({newProduct: productFormData}),
       })
+      const data = await res.json();
+      if (data.error) return toast.error(data.error)
+      setOpenProductDialog(false)
+      toast.success(data.message)
+
+      setProducts(products.map((product) => {
+        if (product._id === productFormData._id) {
+          return data.newProduct;
+        }
+        return product
+      }))
     } catch (error) {
       toast.error(error)
     }
   }
-
-  const handleDeleteProduct = async (productId) => {
-    try {
-      await fetch(`/api/product/${productId}`, {
-        method: "DELETE",
-      });
-      fetchProducts();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
 
   const handleProductFormChange = (e) => {
     setProductFormData({ ...productFormData, [e.target.name]: e.target.value });
@@ -135,6 +136,10 @@ const ProductsManagement = () => {
   const handleCategoryFormChange = (e) => {
     setProductFormData({ ...productFormData, category: e.target.value });
   };
+
+  if (!user || user.role !== 1) {
+      return <NotAuthorized />;
+  }
 
   return (
     <Container>
@@ -173,9 +178,6 @@ const ProductsManagement = () => {
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.category.title}</TableCell>
                 <TableCell>
-                  <IconButton disabled={true} onClick={() => handleDeleteProduct(product._id)}>
-                    <DeleteIcon />
-                  </IconButton>
                   <IconButton onClick={() => handleEditProduct(product)}>
                     <Edit />
                   </IconButton>
@@ -224,22 +226,6 @@ const ProductsManagement = () => {
             onChange={handleProductFormChange}
             fullWidth
           />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={productFormData.category}
-              label="category"
-              onChange={handleCategoryFormChange}
-            >
-              {categories.map((category) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <Input
             type="file"
             ref={fileRef}

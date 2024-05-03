@@ -1,9 +1,50 @@
-import React from 'react';
-import { Typography, Button, Container, Box } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Typography, Button, Container, Box, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useRecoilValue } from 'recoil';
+import orderAtom from '../atom/orderAtom.js';
+import { toast } from 'react-toastify';
 
 const TransactionSuccessPage = () => {
+  const order = JSON.parse(localStorage.getItem("order"));
+  localStorage.removeItem("order");
+
+  useEffect(() => {
+    if (order) {
+      const placeOrder = async () => {
+        try {
+          const res = await fetch("/api/order/placeOrder", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({order: order})
+          });
+          const data = await res.json();
+          if (data.error) {
+            toast.error(data.error);
+          }
+        } catch (error) {
+          console.error("Error placing order:", error);
+          toast.error("Failed to place order");
+        }
+      };
+      placeOrder();
+    }
+  }, [order]);
+
+  if (!order) {
+    return (
+      <Grid sx={{ minHeight: "80vh", placeContent: "center" }}>
+        <Typography variant="h4" align="center">
+          Oops! Something went wrong.
+        </Typography>
+        <Button component={Link} to="/">Go Home</Button>
+      </Grid>
+    );
+  }
+
   return (
     <Container maxWidth="sm" sx={{ textAlign: 'center', marginTop: '4rem', margin: 'auto', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <Box sx={{ color: 'green', marginBottom: '2rem' }}>

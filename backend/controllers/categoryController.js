@@ -67,4 +67,28 @@ const getCategory = async (req, res) => {
     }
 }
 
-export { createCategory, getCategories, getCategory }
+const updateCategory = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { newCategory } = req.body
+
+        const category = await Category.findById(id)
+
+        if (!category) {
+            return res.status(404).json({ error: "Category not found" })
+        }
+
+        category.title = newCategory.title
+        category.description = newCategory.description
+
+        await category.save()
+
+        res.status(200).json({ message: "Category updated successfully", category : category })
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+        console.log(`Error in updateCategory: ${error.message}`)
+    }
+}
+
+export { createCategory, getCategories, getCategory, updateCategory }

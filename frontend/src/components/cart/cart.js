@@ -103,6 +103,12 @@ const CartPage = () => {
       });
       const data = await res.json();
       if (data.error) return toast.error(data.error);
+      localStorage.setItem("order", JSON.stringify({
+        user: user._id,
+        products: cartItems,
+        totalAmount: price,
+        stripeId: data.id
+      }))
       const result = await stripe.redirectToCheckout({
         sessionId: data.id,
       });
